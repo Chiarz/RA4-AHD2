@@ -20,7 +20,7 @@ class LibroController extends Controller
      */
     public function create()
     {
-        //
+        return view('libros.create');
     }
 
     /**
@@ -28,7 +28,16 @@ class LibroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $libro = new Libro();
+        $libro->nombre = $request->nombre;
+        $libro->autor = $request->autor;
+        $libro->editorial = $request->editorial;
+        $libro->descripcion = $request->descripcion;
+        $libro->precio = $request->precio;
+        $libro->disponible = $request->disponible;
+
+        $libro->save();
+        return redirect()->route('libros.index');
     }
 
     /**
@@ -44,7 +53,8 @@ class LibroController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $libro = Libro::findOrFail($id);
+        return view('libros.edit', compact('libro'));
     }
 
     /**
@@ -52,7 +62,17 @@ class LibroController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $libro = Libro::findOrFail($id);
+
+        $libro->nombre = $request->nombre;
+        $libro->autor = $request->autor;
+        $libro->editorial = $request->editorial;
+        $libro->descripcion = $request->descripcion;
+        $libro->precio = $request->precio;
+        $libro->disponible = $request->disponible;
+
+        $libro->save();
+        return redirect()->route('libros.index');
     }
 
     /**
@@ -60,6 +80,8 @@ class LibroController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $libro = Libro::findOrFail($id);
+        $libro->delete();
+        return redirect()->route('libros.index');
     }
 }

@@ -17,6 +17,8 @@
                 <th>Descripción</th>
                 <th>Precio</th>
                 <th>Disponible</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
@@ -28,9 +30,19 @@
             <td>{{ $libro->descripcion }}</td>
             <td>{{ $libro->precio }}</td>
             <td>{{ $libro->disponible }}</td>
+            <td><button><a href="{{ route('libros.edit', $libro->id) }}">EDITAR</a></button></td>
+            <td>
+                <form action="{{ route('libros.destroy', $libro->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Esta seguro de eliminar?')">Eliminar</button>
+                </form>
+            </td>
         </tr>
         @endforeach
         </tbody>
     </table>
+    <br><br><br>
+    <button><a href="{{ route('libros.create') }}">Registrar nuevo</a></button>
 </body>
 </html>
